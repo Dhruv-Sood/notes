@@ -4,6 +4,7 @@ import { getFirestore, collection, query, where, deleteDoc, doc, updateDoc, onSn
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase';
 import NoteCard from './NoteCard';
+
 // Initialize Firebase app and get Firestore instance
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -22,6 +23,8 @@ const DisplayNotes = ({ user, onCreateNote }) => {
         // Set up a real-time listener for the notes
         unsubscribe = onSnapshot(q, (querySnapshot) => {
           const fetchedNotes = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          // Sort notes by createdAt in descending order (newest first)
+          fetchedNotes.sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate());
           setNotes(fetchedNotes);
         });
       }
@@ -68,7 +71,5 @@ const DisplayNotes = ({ user, onCreateNote }) => {
     </div>
   );
 };
-
-
 
 export default DisplayNotes;

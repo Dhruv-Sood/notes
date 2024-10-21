@@ -1,10 +1,14 @@
+// Import necessary dependencies
 import React from 'react';
 import DisplayNotes from "./DisplayNotes";
 import { useNavigate } from 'react-router-dom';
 
+// Notes component definition
 const Notes = ({ user }) => {
+  // Hook for programmatic navigation
   const navigate = useNavigate();
 
+  // Function to handle creation of a new note
   const handleCreateNote = () => {
     navigate('/create');
   };
@@ -17,6 +21,7 @@ const Notes = ({ user }) => {
           <section className="bg-gray-800 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl border border-gray-700 p-8">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold text-purple-300">Your Notes</h2>
+              {/* Button to create a new note */}
               <button
                 onClick={handleCreateNote}
                 className="text-white hover:text-blue-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-full p-2"
@@ -26,6 +31,7 @@ const Notes = ({ user }) => {
                 </svg>
               </button>
             </div>
+            {/* Component to display user's notes */}
             <DisplayNotes user={user} onCreateNote={handleCreateNote} />
           </section>
         </div>

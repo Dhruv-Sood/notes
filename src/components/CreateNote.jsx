@@ -1,17 +1,21 @@
+// Import necessary dependencies
 import React, { useState } from 'react';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
+// Initialize Firebase app and get Firestore instance
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const CreateNote = ({ user }) => {
+    // State for note title and content
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const navigate = useNavigate();
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user) {
@@ -19,13 +23,16 @@ const CreateNote = ({ user }) => {
             return;
         }
         try {
+            // Get reference to the 'notes' collection
             const notesCollection = collection(db, 'notes');
+            // Add new document to the collection
             await addDoc(notesCollection, {
                 title,
                 content,
                 createdAt: new Date(),
                 userId: user.uid
             });
+            // Clear form fields after successful submission
             setTitle('');
             setContent('');
             alert('Note added successfully!');
@@ -35,6 +42,7 @@ const CreateNote = ({ user }) => {
         }
     };
 
+    // Navigate to all notes view
     const handleViewAllNotes = () => {
         navigate('/notes');
     };
@@ -46,6 +54,7 @@ const CreateNote = ({ user }) => {
                     Create a New Note
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6 p-6">
+                    {/* Input field for note title */}
                     <input
                         type="text"
                         placeholder="Title"
@@ -53,6 +62,7 @@ const CreateNote = ({ user }) => {
                         onChange={(e) => setTitle(e.target.value)}
                         className="w-full p-3 bg-gray-700 bg-opacity-50 text-white border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out placeholder-gray-400"
                     />
+                    {/* Textarea for note content */}
                     <textarea
                         placeholder="Content"
                         rows="6"
@@ -60,6 +70,7 @@ const CreateNote = ({ user }) => {
                         onChange={(e) => setContent(e.target.value)}
                         className="w-full p-3 bg-gray-700 bg-opacity-50 text-white border border-gray-600 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out placeholder-gray-400"
                     ></textarea>
+                    {/* Submit button */}
                     <button
                         type="submit"
                         className="w-full py-3 px-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-[1.02]"
@@ -68,6 +79,7 @@ const CreateNote = ({ user }) => {
                     </button>
                 </form>
             </div>
+            {/* Button to view all notes */}
             <div className="w-full max-w-2xl flex justify-end">
                 <button
                     type="button"
