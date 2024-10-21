@@ -57,14 +57,14 @@ const DisplayNotes = ({ user, onCreateNote }) => {
         ))}
       </div>
       {/* Button to create a new note */}
-      <div className="flex justify-end mt-6 px-4">
+      {/* <div className="flex justify-end mt-6 px-4">
         <button
           onClick={onCreateNote}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         >
           Create New Note
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

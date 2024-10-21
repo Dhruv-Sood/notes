@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const NoteModal = ({ isOpen, onClose, note, onEdit, onDelete, isEditing }) => {
     const [editedTitle, setEditedTitle] = useState(note.title);
@@ -12,7 +13,7 @@ const NoteModal = ({ isOpen, onClose, note, onEdit, onDelete, isEditing }) => {
         onClose();
     };
 
-    return (
+    const modalContent = (
         <div className="fixed inset-0 backdrop-filter backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-gray-800 rounded-lg p-8 w-full max-w-4xl mx-4 h-[70vh] flex flex-col">
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
@@ -67,6 +68,11 @@ const NoteModal = ({ isOpen, onClose, note, onEdit, onDelete, isEditing }) => {
                 </form>
             </div>
         </div>
+    );
+
+    return createPortal(
+        modalContent,
+        document.getElementById('modal-root') // Make sure this element exists in your HTML
     );
 };
 
