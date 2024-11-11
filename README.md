@@ -5,7 +5,7 @@ My Notebook is a modern, responsive web application for creating and managing pe
 ## Features
 
 - User authentication
-- Create, read, update, and delete notes
+- Create, read, update, and delete noteshttps://github.com/Dhruv-Sood/notes.git
 - Real-time updates
 - Responsive design for desktop and mobile devices
 - Elegant UI with a dark theme and gradient effects
@@ -22,7 +22,15 @@ My Notebook is a modern, responsive web application for creating and managing pe
 
 1. Clone the repository
 2. Install dependencies with `npm install`
-3. Set up a Firebase project and add your configuration to `src/firebase.js`
+3. Set up a Firebase project and add your configuration to `.env`:
+   ```env
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   ```
 4. Run the development server with `npm run dev`
 
 ## Project Structure

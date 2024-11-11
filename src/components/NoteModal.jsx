@@ -21,24 +21,31 @@ const NoteModal = ({ isOpen, onClose, note, onEdit, onDelete, isEditing }) => {
 
     // Modal content
     const modalContent = (
-        <div className="fixed inset-0 backdrop-filter backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-gray-800 rounded-lg p-8 w-full max-w-4xl mx-4 h-[70vh] flex flex-col">
+        <div className="fixed inset-0 backdrop-filter backdrop-blur-lg bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-gray-900/95 rounded-2xl p-8 w-full max-w-4xl mx-4 h-[80vh] flex flex-col shadow-2xl border border-gray-700/50 transform transition-all duration-300 hover:border-blue-500/30">
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
                     {/* Input for note title */}
                     <input
                         type="text"
                         value={editedTitle}
                         onChange={(e) => setEditedTitle(e.target.value)}
-                        className="text-3xl font-bold mb-4 bg-transparent text-white border-b border-gray-600 focus:outline-none focus:border-blue-500"
+                        className="text-4xl font-bold mb-6 bg-transparent text-white border-b border-gray-700 focus:outline-none focus:border-blue-500 transition-all duration-300 caret-blue-500"
                         placeholder="Untitled"
                         disabled={!isEditing}
+                        style={{
+                            background: 'transparent',
+                            WebkitBackgroundClip: 'text',
+                            backgroundClip: 'text',
+                            backgroundImage: 'linear-gradient(to right, #60A5FA, #A78BFA, #F472B6)',
+                            WebkitTextFillColor: 'transparent'
+                        }}
                     />
                     {/* Textarea for note content */}
                     <textarea
                         value={editedContent}
                         onChange={(e) => setEditedContent(e.target.value)}
-                        className="flex-grow text-gray-300 text-lg mb-6 bg-transparent resize-none focus:outline-none"
-                        placeholder="No content"
+                        className="flex-grow text-gray-300 text-lg mb-6 bg-transparent resize-none focus:outline-none scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent hover:scrollbar-thumb-blue-500/50 p-2 caret-blue-500"
+                        placeholder="Start typing your note here..."
                         disabled={!isEditing}
                     />
                     {/* Buttons for actions */}
@@ -48,14 +55,14 @@ const NoteModal = ({ isOpen, onClose, note, onEdit, onDelete, isEditing }) => {
                                 {/* Save button */}
                                 <button
                                     type="submit"
-                                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+                                    className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition duration-300 transform hover:scale-105 hover:shadow-lg"
                                 >
-                                    Save
+                                    Save Changes
                                 </button>
                                 {/* Cancel button */}
                                 <button
                                     onClick={onClose}
-                                    className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+                                    className="bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-2.5 px-6 rounded-lg transition duration-300 transform hover:scale-105"
                                 >
                                     Cancel
                                 </button>
@@ -65,14 +72,14 @@ const NoteModal = ({ isOpen, onClose, note, onEdit, onDelete, isEditing }) => {
                                 {/* Delete button */}
                                 <button
                                     onClick={() => onDelete(note.id)}
-                                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+                                    className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-2.5 px-6 rounded-lg transition duration-300 transform hover:scale-105 hover:shadow-lg"
                                 >
-                                    Delete
+                                    Delete Note
                                 </button>
                                 {/* Close button */}
                                 <button
                                     onClick={onClose}
-                                    className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+                                    className="bg-gray-700 hover:bg-gray-600 text-gray-300 font-bold py-2.5 px-6 rounded-lg transition duration-300 transform hover:scale-105"
                                 >
                                     Close
                                 </button>

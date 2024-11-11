@@ -4,20 +4,23 @@ import { getFirestore, collection, query, where, deleteDoc, doc, updateDoc, onSn
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase';
 import NoteCard from './NoteCard';
+import Loader from './Loader';
 
 // Initialize Firebase app and get Firestore instance
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const DisplayNotes = ({ user, onCreateNote }) => {
-  // State to store the user's notes
+  // State to store the user's notes and loading state
   const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let unsubscribe = () => {};
 
     const fetchNotes = async () => {
       if (user) {
+        setIsLoading(true);
         // Create a query to get notes for the current user
         const q = query(collection(db, 'notes'), where('userId', '==', user.uid));
         // Set up a real-time listener for the notes
@@ -26,6 +29,7 @@ const DisplayNotes = ({ user, onCreateNote }) => {
           // Sort notes by createdAt in descending order (newest first)
           fetchedNotes.sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate());
           setNotes(fetchedNotes);
+          setIsLoading(false);
         });
       }
     };
@@ -45,6 +49,12 @@ const DisplayNotes = ({ user, onCreateNote }) => {
   const handleEdit = async (id, newTitle, newContent) => {
     await updateDoc(doc(db, 'notes', id), { title: newTitle, content: newContent });
   };
+
+  if (isLoading) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <div>
